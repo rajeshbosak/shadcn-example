@@ -1,54 +1,70 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Toaster } from "@/components/ui/sonner";
-import { Skeleton } from "@/components/ui/skeleton"
-import CommandDemo from "./components/my_components/command_demo";
-import ContextMenuDemo from "./components/my_components/context_menu_demo";
-import UsersComp from "./components/my_components/users_comp";
+import React, { useState, useEffect } from "react";
+import MovingDotsBackground from "./components/MovingDotsBackground";
+import Navbar from "./components/Navbar";
+import LoginPage from "./components/LoginPage";
+import RegisterPage from "./components/RegisterPage";
+import HomePage from "./components/HomePage";
+import Footer from "./components/Footer";
 
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0);
+// Main App Component
+const App = () => {
+  const [currentPage, setCurrentPage] = useState("home");
 
-  // const [date, setDate] = (React.useState < Date) | (undefined > new Date());
+  // comment this code if you want to use renderePage()
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (currentPage) {
+      navigate(`/${currentPage}`);
+    }
+  }, [currentPage]);
 
-  const [date, setDate] = useState(new Date());
+  const renderPage = () => {
+    switch (currentPage) {
+      case "login":
+        return <LoginPage setCurrentPage={setCurrentPage} />;
+      case "register":
+        return <RegisterPage setCurrentPage={setCurrentPage} />;
+      default:
+        return <HomePage />;
+    }
+  };
 
   return (
-    <>
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      <MovingDotsBackground />
 
-      <UsersComp />
+      <div className="relative z-10 min-h-screen flex flex-col">
+        <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
 
-      <br />
-      <CommandDemo />
+        {/* {renderPage()} */}
 
-      <ContextMenuDemo />
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route
+            path="*"
+            element={
+              <div className="flex-1 flex items-center justify-center text-white text-2xl">
+                404 - Page Not Found
+              </div>
+            }
+          />
+        </Routes>
 
-      <div className="flex items-center space-x-4">
-        <Skeleton className="h-12 w-12 rounded-full" />
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-[250px]" />
-          <Skeleton className="h-4 w-[200px]" />
-        </div>
+        <Footer />
       </div>
-
-      {/* <div className="flex min-h-svh flex-col items-center justify-center"> */}
-      <Button>Click me</Button>
-      {/* </div> */}
-      <Toaster />
-
-      <Calendar
-        mode="single"
-        selected={date}
-        onSelect={setDate}
-        className="rounded-lg border"
-      />
-    </>
+    </div>
   );
-}
+};
 
 export default App;
