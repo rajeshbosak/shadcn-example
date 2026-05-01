@@ -1,27 +1,22 @@
-import React, { useState, useEffect } from "react";
-import {
-  User,
-  Mail,
-  Lock,
-  Home,
-  LogIn,
-  UserPlus,
-  Menu,
-  X,
-  Github,
-  Twitter,
-  Linkedin,
-} from "lucide-react";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { Home, LogIn, UserPlus, Menu, X } from "lucide-react";
 import GlassCard from "./GlassCard";
 
 // Navbar Component
-const Navbar = ({ currentPage, setCurrentPage }) => {
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { id: "home", label: "Home", icon: Home },
-    { id: "login", label: "Login", icon: LogIn },
-    { id: "register", label: "Register", icon: UserPlus },
+    { id: "home", label: "Home", icon: Home, to: "/home" },
+    { id: "login", label: "Login", icon: LogIn, to: "/login" },
+    { id: "register", label: "Register", icon: UserPlus, to: "/register" },
+    {
+      id: "dashboard",
+      label: "Virus Protection",
+      icon: UserPlus,
+      to: "/dashboard",
+    },
   ];
 
   return (
@@ -35,18 +30,20 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
-                <button
+                <NavLink
                   key={item.id}
-                  onClick={() => setCurrentPage(item.id)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 ${
-                    currentPage === item.id
-                      ? "bg-white/20 text-white"
-                      : "text-white/70 hover:text-white hover:bg-white/10"
-                  }`}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 ${
+                      isActive
+                        ? "bg-white/20 text-white"
+                        : "text-white/70 hover:text-white hover:bg-white/10"
+                    }`
+                  }
                 >
                   <Icon className="w-4 h-4" />
                   <span>{item.label}</span>
-                </button>
+                </NavLink>
               );
             })}
           </div>
@@ -70,21 +67,21 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
-                <button
+                <NavLink
                   key={item.id}
-                  onClick={() => {
-                    setCurrentPage(item.id);
-                    setIsMenuOpen(false);
-                  }}
-                  className={`flex items-center space-x-2 w-full px-4 py-3 rounded-lg transition-all duration-300 ${
-                    currentPage === item.id
-                      ? "bg-white/20 text-white"
-                      : "text-white/70 hover:text-white hover:bg-white/10"
-                  }`}
+                  to={item.to}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center space-x-2 w-full px-4 py-3 rounded-lg transition-all duration-300 ${
+                      isActive
+                        ? "bg-white/20 text-white"
+                        : "text-white/70 hover:text-white hover:bg-white/10"
+                    }`
+                  }
                 >
                   <Icon className="w-4 h-4" />
                   <span>{item.label}</span>
-                </button>
+                </NavLink>
               );
             })}
           </div>

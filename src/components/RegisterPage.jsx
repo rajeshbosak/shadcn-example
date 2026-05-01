@@ -1,23 +1,12 @@
-import React, { useState, useEffect } from "react";
-import {
-  User,
-  Mail,
-  Lock,
-  Home,
-  LogIn,
-  UserPlus,
-  Menu,
-  X,
-  Github,
-  Twitter,
-  Linkedin,
-} from "lucide-react";
+import React from "react";
+import { Link } from "react-router-dom";
+import { User, Mail, Lock, UserPlus } from "lucide-react";
 import GlassCard from "./GlassCard";
 import GlassInput from "./GlassInput";
 import GlassButton from "./GlassButton";
 
 // Register Page
-const RegisterPage = ({ setCurrentPage }) => (
+const RegisterPage = () => (
   <div className="flex-1 flex items-center justify-center p-4">
     <GlassCard className="w-full max-w-md p-8">
       <div className="text-center mb-8">
@@ -72,12 +61,9 @@ const RegisterPage = ({ setCurrentPage }) => (
 
         <div className="text-center">
           <span className="text-white/70">Already have an account? </span>
-          <button
-            onClick={() => setCurrentPage("login")}
-            className="text-white hover:underline font-medium"
-          >
+          <Link to="/login" className="text-white hover:underline font-medium">
             Sign in
-          </button>
+          </Link>
         </div>
       </div>
     </GlassCard>

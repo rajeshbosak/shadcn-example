@@ -1,17 +1,4 @@
-import React, { useState, useEffect } from "react";
-import {
-  User,
-  Mail,
-  Lock,
-  Home,
-  LogIn,
-  UserPlus,
-  Menu,
-  X,
-  Github,
-  Twitter,
-  Linkedin,
-} from "lucide-react";
+import React from "react";
 import GlassCard from "./GlassCard";
 import GlassButton from "./GlassButton";
 
